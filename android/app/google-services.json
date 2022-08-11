@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "42057866977",
+    "project_id": "wasteagram-ab708",
+    "storage_bucket": "wasteagram-ab708.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:42057866977:android:61406dad4f06f480ef61a0",
+        "android_client_info": {
+          "package_name": "edu.oregonstate.rietze.wasteagram2"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "42057866977-o5mhvhffn78fnu5ohkrfi2clo5f4jf2a.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDUXafF6C15P8n_ou09U64rBGFlfGPKNyE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "42057866977-o5mhvhffn78fnu5ohkrfi2clo5f4jf2a.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "42057866977-8thf93ivqq420hfe21qqijst1oudcdbi.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "edu.oregonstate.rietze.wasteagram"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
