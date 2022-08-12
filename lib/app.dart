@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+import './screens/waste_entry_list_screen.dart';
 
 
 class App extends StatelessWidget {
@@ -7,52 +7,11 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
+      theme: ThemeData.dark(),
       title: 'Wasteagram',
-      home: WasteEntryList()
+      home: const WasteEntryList()
     );
   }
 }
 
-
-class WasteEntryList extends StatefulWidget {
-  const WasteEntryList({Key? key}) : super(key: key);
-
-  @override
-  WasteEntryListState createState() => WasteEntryListState();
-}
-
-class WasteEntryListState extends State<WasteEntryList> {
-
-  @override
-  Widget build(BuildContext context) {
-    return StreamBuilder(
-      stream: FirebaseFirestore.instance.collection('posts').snapshots(),
-      builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-        if (
-          snapshot.hasData &&
-          snapshot.data!.docs.isNotEmpty
-        ) {
-          return Scaffold(
-            body: ListView.builder(
-              itemCount: snapshot.data!.docs.length,
-              itemBuilder: (context, index) {
-                final post = snapshot.data!.docs[index];
-                return ListTile(
-                  leading: Text((post['date'].toDate()).toString()),
-                  title: Text(post['numberItems'].toString()));
-              },
-            )
-          );
-        } else {
-          return Column(
-            children: const [
-              Center(child: CircularProgressIndicator()),
-            ],
-          );
-        }
-      }
-    );
-  }
-
-}
