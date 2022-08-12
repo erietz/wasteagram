@@ -35,8 +35,8 @@ class WasteEntryListState extends State<WasteEntryList> {
                 final entryDetail = EntryDetail(
                   date: post['date'].toDate(),
                   numberItems: post['numberItems'],
-                  latitude: post['latitude'],
-                  longitude: post['longitude'],
+                  latitude: post['latitude'].toDouble(),
+                  longitude: post['longitude'].toDouble(),
                   image: Image(
                     image: NetworkImage(post['image'])
                   )
@@ -58,7 +58,13 @@ class WasteEntryListState extends State<WasteEntryList> {
             ),
             floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
             floatingActionButton: FloatingActionButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(builder: (context) {
+                    return const NewEntryScreen();
+                  })
+                );
+              },
               child: const Icon(Icons.camera_alt)
             ),
           );
