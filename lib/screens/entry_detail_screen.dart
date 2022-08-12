@@ -19,10 +19,23 @@ class EntryDetailScreen extends StatelessWidget {
       body: Center(
         child: Column(
           children: [
-            Text("Date: ${entryDetail.date.toString()}"),
+            const SizedBox(height: 50),
+            Text(
+              entryDetail.date.toString(),
+              style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w700)
+            ),
+            const SizedBox(height: 50),
             entryDetail.image,
-            Text("Number items: ${entryDetail.numberItems.toString()}"),
-            Text("(${entryDetail.latitude}, ${entryDetail.longitude})")
+            const SizedBox(height: 50),
+            Text(
+              "Number of wasted items: ${entryDetail.numberItems.toString()}",
+              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w400)
+            ),
+            const SizedBox(height: 50),
+            Text(
+              "Location: (${entryDetail.latitude}, ${entryDetail.longitude})",
+              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w400)
+            )
           ],
         )
       )
