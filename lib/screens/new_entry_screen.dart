@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
 class NewEntryScreen extends StatefulWidget {
-  const NewEntryScreen({Key? key}) : super(key: key);
+  const NewEntryScreen({
+    Key? key,
+  }) : super(key: key);
 
   @override
   State<NewEntryScreen> createState() => _NewEntryScreenState();

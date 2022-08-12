@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:wasteagram2/models/entry_detail.dart';
+import 'package:wasteagram2/screens/entry_detail_screen.dart';
 import 'package:wasteagram2/screens/new_entry_screen.dart';
 
 
@@ -30,13 +32,24 @@ class WasteEntryListState extends State<WasteEntryList> {
               itemCount: snapshot.data!.docs.length,
               itemBuilder: (context, index) {
                 final post = snapshot.data!.docs[index];
+                final entryDetail = EntryDetail(
+                  date: post['date'].toDate(),
+                  numberItems: post['numberItems'],
+                  latitude: 2,
+                  longitude: 3,
+                  image: const Image(
+                    image: NetworkImage("https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg")
+                  )
+                );
                 return ListTile(
                   title: Text((post['date'].toDate()).toString()),
                   trailing: Text(post['numberItems'].toString()),
                   onTap: () {
                     Navigator.of(context).push(
                       MaterialPageRoute(builder: (context) {
-                        return const NewEntryScreen();
+                        return EntryDetailScreen(
+                          entryDetail: entryDetail
+                        );
                       })
                     );
                   }
