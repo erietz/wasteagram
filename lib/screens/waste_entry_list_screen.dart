@@ -35,10 +35,10 @@ class WasteEntryListState extends State<WasteEntryList> {
                 final entryDetail = EntryDetail(
                   date: post['date'].toDate(),
                   numberItems: post['numberItems'],
-                  latitude: 2,
-                  longitude: 3,
-                  image: const Image(
-                    image: NetworkImage("https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg")
+                  latitude: post['latitude'],
+                  longitude: post['longitude'],
+                  image: Image(
+                    image: NetworkImage(post['image'])
                   )
                 );
                 return ListTile(
