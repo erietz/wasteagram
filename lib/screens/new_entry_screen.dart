@@ -29,6 +29,7 @@ class _NewEntryScreenState extends State<NewEntryScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         title: const Text("New Entry")
       ),
@@ -36,11 +37,10 @@ class _NewEntryScreenState extends State<NewEntryScreen> {
         child: Column(
           children: [
             const SizedBox(height: 30),
-            myBigNetworkImage(context, widget.imageUrl),
-            const SizedBox(height: 30),
             Form(
               key: formKey,
               child: TextFormField(
+                keyboardType: TextInputType.number,
                 decoration: const InputDecoration(
                   labelText: "Number of Items",
                   border: OutlineInputBorder()
@@ -58,8 +58,11 @@ class _NewEntryScreenState extends State<NewEntryScreen> {
                 }
               )
             ),
+            const SizedBox(height: 30),
+            myBigNetworkImage(context, widget.imageUrl),
+            const SizedBox(height: 30),
             ElevatedButton(
-              child: const Text("Upload image here"),
+              child: const Text("Save Post"),
               onPressed: () async {
 
 
