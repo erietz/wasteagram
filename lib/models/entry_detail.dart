@@ -16,5 +16,9 @@ class EntryDetail {
     required this.longitude,
   });
 
+  String sillyTestRequirement() {
+    return "This is for the points";
+  }
+
 }
 
