@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:wasteagram2/models/entry_detail.dart';
 import 'package:wasteagram2/screens/entry_detail_screen.dart';
 import 'package:wasteagram2/screens/new_entry_screen.dart';
+import 'package:intl/intl.dart';
 import '../util/util.dart';
 
 
@@ -19,7 +20,11 @@ class WasteEntryListState extends State<WasteEntryList> {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
-      stream: FirebaseFirestore.instance.collection('posts').snapshots(),
+      stream: FirebaseFirestore
+        .instance
+        .collection('posts')
+        .orderBy('date', descending: true)
+        .snapshots(),
       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
         Widget body;
         if (
@@ -68,7 +73,9 @@ class WasteEntryListState extends State<WasteEntryList> {
 
         );
         return ListTile(
-          title: Text((post['date'].toDate()).toString()),
+          title: Text(
+            DateFormat("yyyy-MM-dd HH:mm:ss").format(post['date'].toDate())
+          ),
           trailing: Text(post['numberItems'].toString()),
           onTap: () {
             Navigator.of(context).push(
