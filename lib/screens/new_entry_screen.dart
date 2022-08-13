@@ -5,6 +5,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:path/path.dart' as path;
+import 'package:location/location.dart';
 
 class NewEntryScreen extends StatefulWidget {
   const NewEntryScreen({
@@ -28,6 +29,13 @@ class _NewEntryScreenState extends State<NewEntryScreen> {
     return url;
   }
 
+
+  Future<LocationData> getLocation() async {
+    final locationService = Location();
+    final locationData = await locationService.getLocation();
+    return locationData;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,11 +46,12 @@ class _NewEntryScreenState extends State<NewEntryScreen> {
         child: const Text("Upload image here"),
         onPressed: () async {
           final url = await getImageAndStore();
+          final locationData = await getLocation();
           FirebaseFirestore.instance.collection('posts').add({
             'image': url,
             'date': DateTime.now(),
-            'latitude': 34.0,
-            'longitude': 45.0,
+            'latitude': locationData.latitude,
+            'longitude': locationData.longitude,
             'numberItems': 987
           });
         }
