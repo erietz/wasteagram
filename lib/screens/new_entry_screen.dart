@@ -1,15 +1,14 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
-import 'package:firebase_storage/firebase_storage.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:path/path.dart' as path;
 import 'package:location/location.dart';
+import '../util/util.dart';
 
 class NewEntryScreen extends StatefulWidget {
+  final String imageUrl;
+
   const NewEntryScreen({
     Key? key,
+    required this.imageUrl,
   }) : super(key: key);
 
   @override
@@ -17,18 +16,9 @@ class NewEntryScreen extends StatefulWidget {
 }
 
 class _NewEntryScreenState extends State<NewEntryScreen> {
-  late File image;
 
-  Future<String> getImageAndStore() async {
-    XFile? tmp = await ImagePicker().pickImage(source: ImageSource.gallery);
-    image = File(tmp!.path);
-    final storageReference = FirebaseStorage.instance.ref().child(path.basename(image.path));
-    await storageReference.putFile(image);
-    final url = await storageReference.getDownloadURL();
-    print("url here $url");
-    return url;
-  }
-
+  final formKey = GlobalKey<FormState>();
+  int? numberItems;
 
   Future<LocationData> getLocation() async {
     final locationService = Location();
@@ -42,19 +32,56 @@ class _NewEntryScreenState extends State<NewEntryScreen> {
       appBar: AppBar(
         title: const Text("New Entry")
       ),
-      body: ElevatedButton(
-        child: const Text("Upload image here"),
-        onPressed: () async {
-          final url = await getImageAndStore();
-          final locationData = await getLocation();
-          FirebaseFirestore.instance.collection('posts').add({
-            'image': url,
-            'date': DateTime.now(),
-            'latitude': locationData.latitude,
-            'longitude': locationData.longitude,
-            'numberItems': 987
-          });
-        }
+      body: Center(
+        child: Column(
+          children: [
+            const SizedBox(height: 30),
+            myBigNetworkImage(context, widget.imageUrl),
+            const SizedBox(height: 30),
+            Form(
+              key: formKey,
+              child: TextFormField(
+                decoration: const InputDecoration(
+                  labelText: "Number of Items",
+                  border: OutlineInputBorder()
+                ),
+                onSaved: (value) {
+                  numberItems = int.tryParse(value as String);
+                },
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return "Please entry the number of wasted items";
+                  } else if (int.tryParse(value) == null) {
+                    return "Must be an integer";
+                  }
+                  return null;
+                }
+              )
+            ),
+            ElevatedButton(
+              child: const Text("Upload image here"),
+              onPressed: () async {
+
+
+                if (formKey.currentState != null && formKey.currentState!.validate()) {
+                  formKey.currentState!.save();
+                }
+
+                final locationData = await getLocation();
+                FirebaseFirestore.instance.collection('posts').add({
+                  'image': widget.imageUrl,
+                  'date': DateTime.now(),
+                  'latitude': locationData.latitude,
+                  'longitude': locationData.longitude,
+                  'numberItems': numberItems
+                });
+
+                Navigator.of(context).pop();
+
+              }
+            )
+          ]
+        )
       )
     );
   }

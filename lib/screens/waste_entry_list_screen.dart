@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:wasteagram2/models/entry_detail.dart';
 import 'package:wasteagram2/screens/entry_detail_screen.dart';
 import 'package:wasteagram2/screens/new_entry_screen.dart';
+import '../util/util.dart';
 
 
 class WasteEntryList extends StatefulWidget {
@@ -37,10 +38,11 @@ class WasteEntryListState extends State<WasteEntryList> {
           body: body,
           floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
           floatingActionButton: FloatingActionButton(
-            onPressed: () {
+            onPressed: () async {
+              final image = await getImageAndStore();
               Navigator.of(context).push(
                 MaterialPageRoute(builder: (context) {
-                  return const NewEntryScreen();
+                  return NewEntryScreen(imageUrl: image);
                 })
               );
             },
@@ -61,12 +63,9 @@ class WasteEntryListState extends State<WasteEntryList> {
           numberItems: post['numberItems'],
           latitude: post['latitude'].toDouble(),
           longitude: post['longitude'].toDouble(),
-          image: Image(
-            image: NetworkImage(post['image']),
-            width: 0.7 * MediaQuery.of(context).size.width,
-            height: 0.7 * MediaQuery.of(context).size.width,
-            fit: BoxFit.fill
-          )
+
+          image: myBigNetworkImage(context, post['image']),
+
         );
         return ListTile(
           title: Text((post['date'].toDate()).toString()),
@@ -86,3 +85,4 @@ class WasteEntryListState extends State<WasteEntryList> {
   }
 
 }
+
