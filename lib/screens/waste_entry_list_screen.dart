@@ -62,7 +62,10 @@ class WasteEntryListState extends State<WasteEntryList> {
           latitude: post['latitude'].toDouble(),
           longitude: post['longitude'].toDouble(),
           image: Image(
-            image: NetworkImage(post['image'])
+            image: NetworkImage(post['image']),
+            width: 0.7 * MediaQuery.of(context).size.width,
+            height: 0.7 * MediaQuery.of(context).size.width,
+            fit: BoxFit.fill
           )
         );
         return ListTile(
